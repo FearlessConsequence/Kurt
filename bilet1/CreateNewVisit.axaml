@@ -1,0 +1,18 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="bilet1.CreateNewVisit"
+        Title="CreateNewVisit">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,10,0,0">
+          <TextBlock Text="Hey there" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" x:Name="HeyThereTextBlock"/>
+          <TextBox x:Name="LeaderTextBox" PlaceholderText="Введите руководителя" Width="200"/>
+          <TextBox x:Name="DateTextBox" PlaceholderText="Введите дату" Width="200"/>
+          <TextBox x:Name="ChildrenCountTextBox" PlaceholderText="Введите количество детей в кружке" Width="200"/>
+          <Button Content="Сохранить" Click="OnSaveRecord"/>
+        </StackPanel>
+</Window>
+
+
+

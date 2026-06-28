@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="bilet1.MainWindow"
+        Title="bilet1"
+        Width="800" Height="600"
+        WindowStartupLocation="CenterScreen">
+    
+    <ScrollViewer>
+        <StackPanel Margin="10">
+            <TextBlock Text="Hey there" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" x:Name="HeyThereTextBlock"/>
+            <TextBlock Text="Кружки" FontSize="16" FontWeight="Bold" Margin="0,0,0,5"/>
+            <ListBox x:Name="CircleListBox" Height="200">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="{Binding CircleName}" Width="150"/>
+                            <TextBlock Text="{Binding EducationLevel}" Width="150"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            <TextBlock Text="Руководители" FontSize="16" FontWeight="Bold" Margin="0,20,0,5"/>
+            <ListBox x:Name="LeadersListBox" Height="200">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="{Binding FullName}" Width="250"/>
+                            <TextBlock Text="{Binding CircleName}" Width="150"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            <Button Content="Create new visit" 
+                    HorizontalAlignment="Center" 
+                    Width="150" Height="35"
+                    Margin="0,20,0,0"
+                    Click="OnCreateNewVisit"/>
+            
+        </StackPanel>
+    </ScrollViewer>
+</Window>

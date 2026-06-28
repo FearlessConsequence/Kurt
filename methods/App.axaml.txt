@@ -1,0 +1,177 @@
+// selectttt
+public async Task<List<Stuff>> LoadStuff()
+    {
+        var list = new List<Stuff>();
+        using var conn = new NpgsqlConnection(_connectionString);
+        await conn.OpenAsync();
+        string sql = @"               ";
+        using var cmd = new NpgsqlCommand(sql, conn);
+        using var reader = await cmd.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            list.Add(new Stuff
+            {
+               Id = reader.GetInt32(0),
+               LastName = reader.GetString(1),
+               FirstName = reader.GetString(2),
+               Patronymic = reader.IsDBNull(3) ? "" : reader.GetString(3), 
+               PhoneNumber = reader.GetString(4)
+            });
+        }
+        
+        return list;
+    }
+
+
+// selectttt authenticate
+public async Task<Users> AuthenticateUser(string login, string password)
+    {
+        using var conn = new NpgsqlConnection(_connectionString);
+        await conn.OpenAsync();
+
+        string sql = @"            ";
+        
+        using var cmd = new NpgsqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@login", login);
+        cmd.Parameters.AddWithValue("@password", password);
+        using var reader = await cmd.ExecuteReaderAsync();
+
+        if (await reader.ReadAsync())
+        {
+            return new Users
+            {
+                Id = reader.GetInt32(0),
+                Login = reader.GetString(1),
+                Password = reader.GetString(2)
+            };
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+// updateeee
+public async Task UpdateStuff(Stuff stuff)
+    {
+        using var conn = new NpgsqlConnection(_connectionString);
+        await conn.OpenAsync();
+        
+        string sql = @"            ";
+        
+        using var cmd = new NpgsqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@id", stuff.Id);
+        cmd.Parameters.AddWithValue("@last_name", stuff.LastName);
+        cmd.Parameters.AddWithValue("@first_name", stuff.FirstName);
+        cmd.Parameters.AddWithValue("@patronymic", stuff.Patronymic);
+        cmd.Parameters.AddWithValue("@phone_number", stuff.PhoneNumber);
+        await cmd.ExecuteNonQueryAsync();
+    }
+
+
+
+
+
+// insertttt
+public async Task CreateRecordInJournal(string client, string setting, string stuff)
+    {
+        using var conn = new NpgsqlConnection(_connectionString);
+        await conn.OpenAsync();
+
+        string sql = @"         ";
+
+        using var cmd = new NpgsqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@ClientFullName", client);
+        cmd.Parameters.AddWithValue("@SettingName", setting);
+        cmd.Parameters.AddWithValue("@StuffFullName", stuff);
+        await cmd.ExecuteNonQueryAsync();
+    }
+
+
+puclic async Task DeleteStuff(string.......)
+{
+	using var conn = new NpgsqlConnection(_connectionString);
+        await conn.OpenAsync();
+
+        string sql = @"        ";
+
+        using var cmd = new NpgsqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@ClientFullName", client);
+        cmd.Parameters.AddWithValue("@SettingName", setting);
+        cmd.Parameters.AddWithValue("@StuffFullName", stuff);
+        await cmd.ExecuteNonQueryAsync();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="bilet3.JournalWindow"
+        Title="JournalWindow">
+        <StackPanel>
+          <StackPanel Margin="0, 20">
+            <TextBox PlaceholderText="Введите ФИО сотрудника" x:Name="txt_stuff_fio" Width="200"/>
+            <TextBox PlaceholderText="Введите ФИО ученика" x:Name="txt_student_fio" Width="200"/>
+            <TextBox PlaceholderText="Введите название предмета" x:Name="txt_object" Width="200"/>
+            <TextBox PlaceholderText="Введите оценку" x:Name="txt_mark" Width="200"/>
+            <Button Content="Очистить" Click="OnClearClick" HorizontalAlignment="Center"/>
+            <Button Content="Сохранить" Click="OnSaveClick" HorizontalAlignment="Center"/>
+            <TextBlock Text="" x:Name="txbl_error"/>
+          </StackPanel>        
+          
+          <ScrollViewer Height="400">
+            <ListBox x:Name="lstbx_Journal">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel>
+                    <TextBlock Text="{Binding StuffFio}"/>
+                    <TextBlock Text="{Binding StudentFio}"/>
+                    <TextBlock Text="{Binding Name}" />
+                    <TextBlock Text="{Binding Mark}"/>
+                    <Button Content="✏" Tag="{Binding}" Click="OnEditClick"/>
+                  </StackPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </ScrollViewer>
+
+          <StackPanel x:Name="stck_edit" IsVisible="False">
+            <TextBox PlaceholderText="Введите ФИО сотрудника" x:Name="txt_stuff_fio_edit" Width="200"/>
+            <TextBox PlaceholderText="Введите ФИО ученика" x:Name="txt_student_fio_edit" Width="200"/>
+            <TextBox PlaceholderText="Введите название предмета" x:Name="txt_object_edit" Width="200"/>
+            <TextBox PlaceholderText="Введите оценку" x:Name="txt_mark_edit" Width="200"/>
+            <Button Content="Отмена" Click="OnCancelClick"/>
+            <Button Content="Сохранить" Click="OnSaveEditingClick"/>
+          </StackPanel>
+        </StackPanel>
+</Window>
+

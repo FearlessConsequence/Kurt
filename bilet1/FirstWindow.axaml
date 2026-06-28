@@ -1,0 +1,12 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="bilet1.FirstWindow"
+        Title="FirstWindow">
+        <StackPanel Margin="10">
+          <TextBlock Text="Hey italian food. Below is picture" FontSize="20"/>
+          <Button Content="Open new window" Click="OnOpenWindow"/>
+        </StackPanel>
+</Window>
